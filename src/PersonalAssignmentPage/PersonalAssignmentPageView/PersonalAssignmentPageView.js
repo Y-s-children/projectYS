@@ -11,7 +11,7 @@ export function PersonalAssignmentPageView() {
     [Date.now()] : {context , deadline, assignmentType},
     };
     setAssignments(newAssignment);
-  };
+  }; 
  
   // debugging
   setAssignmentType('completed')
