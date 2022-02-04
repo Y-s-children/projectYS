@@ -3,4 +3,4 @@ export const theme ={
     darkGreen: "#286823",
     green: "#4BFC2E",
     grey: 'grey',
-  };
+};
