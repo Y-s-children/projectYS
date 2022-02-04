@@ -1,54 +1,41 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Dimensions } from 'react-native';
+import { ScrollView } from 'react-native-web';
+
 import {theme} from "../../theme.js";
+import {CompletedAssignment} from './CompletedAssignment.js';
+import {TeamAssignment} from './TeamAssignment.js';
+import {PersonalAssignment} from './PersonalAssignment.js';
+import {AddAssignment} from './AddAssignment.js';
+
+const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
+
 
 export function PersonalAssignmentPageView() {
-
-  const [assignments, setAssignments] = React.useState({});
-  const [assignmentType, setAssignmentType] = React.useState({});
-  const addToDo = () => {
-    const newAssignment = {...assignments, 
-    [Date.now()] : {context , deadline, assignmentType},
-    };
-    setAssignments(newAssignment);
-  }; 
- 
-  // debugging
-  setAssignmentType('completed')
-
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text>Y's children</Text>
-        <Text>메뉴</Text>
+        <Text style={styles.headerText}>Y's children</Text>
+        <Text style={styles.headerText}>메뉴</Text>
       </View>
       
-      <View style={styles.assignments}>
-
-        <ScrollView style={styles.teamAssignments}>
-          {Object.keys(assignments).map((key) => (
-            assignments[key].assignmentType === 'completed' ? 
-            <View style={styles.assignment} key={key}> 
-              <Text style={styles.assignmentText}>{assignments[key].context}</Text>
-              <Text style={styles.assignmentDeadline}>{assignments[key].deadline}</Text>
-            </View> : null
-            ))}
-        </ScrollView>
-
-
-
+      <ScrollView contentContainerStyle={styles.assignments}>
 
         <View style={styles.teamAssignments}>
-          <Text>teamAssignments!!!</Text>
+          <TeamAssignment assignmentName={"팀 과제1"} dDay={"D-10"}/>
+          <TeamAssignment assignmentName={"팀 과제2"} dDay={"D-4"}/>
         </View>
         <View style={styles.personalAssignments}>
-          <Text>personalAssignments!!!</Text>
+          <PersonalAssignment assignmentName={"개인 과제1"} dDay={"D-6"}/>
+          <PersonalAssignment assignmentName={"개인 과제2"} dDay={"D-3"}/>
+          <AddAssignment assignmentName={"과제추가하기"}/>
         </View>
         <View style={styles.completedAssignments}>
-          <Text>completedAssignments!!!</Text>
+          <CompletedAssignment assignmentName={"완료된 과제1"} />
+          <CompletedAssignment assignmentName={"완료된 과제2"} />
         </View>
-      </View>
+      </ScrollView>
 
     </View>
   );
@@ -57,32 +44,36 @@ export function PersonalAssignmentPageView() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000',
-    alignItems: 'center',
-    paddingHorizontal: 20,
   },
   header: {
     flexDirection: "row",
-    justifyContent: "space-between",
-    backgroundColor: theme.headerBackground,
+    justifyContent: 'space-between',
+    backgroundColor: theme.lightGreen,
+    height: 57,
+    alignItems : "center",
   },
   headerText: {
-    fontSize: 30,
     fontWeight: '500',
+    fontSize: 18,
+    paddingHorizontal: 13,
   },
   assignments: {
-
+    justifyContent: 'center',
+    backgroundColor: 'white',
+    
   },
   teamAssignments: {
-    flex: 1,
-    backgroundColor: '#0ff',
+    marginHorizontal: 25,
+    borderBottomColor: theme.green,
+    borderBottomWidth: 3,
   },
   personalAssignments: {
-    flex: 1,
-    backgroundColor: '#f0f',
+    marginHorizontal: 25,
+    borderBottomColor: theme.green,
+    borderBottomWidth: 3,
   },
+  
   completedAssignments: {
-    flex: 1,
-    backgroundColor: '#ff0',
+    marginHorizontal: 25,
   },
 });

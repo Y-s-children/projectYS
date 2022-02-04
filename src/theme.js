@@ -1,5 +1,6 @@
 export const theme ={
-    headerBackground: "#BDFFA6",
-    green: "#286823",
-    lightGreen: "#4BFC2E",
-  }; 
+    lightGreen: "#BDFFA6",
+    darkGreen: "#286823",
+    green: "#4BFC2E",
+    grey: 'grey',
+};
