@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -5,20 +6,35 @@ import {
   TouchableOpacity,
   Dimensions,
 } from "react-native";
+import AddDirectoryModal from "./modal/addDirectoryModal/AddDirectoryModal";
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
 
 export default function AddDirectory(props) {
-  // props는 재 할당할 수 없다.
+  const [modalVisible, setVisibility] = useState(false);
+  const onPressAddDirectory = () => {
+    setVisibility(true);
+  };
+  const onCloseModal = () => {
+    setVisibility(false);
+  };
+
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.insideDirectoryButton}>
+      <TouchableOpacity
+        style={styles.insideDirectoryButton}
+        onPress={onPressAddDirectory}
+      >
         <Text style={{ fontSize: 36 }}>+</Text>
       </TouchableOpacity>
 
       <View style={styles.insideDirectoryBackground}>
         <Text style={styles.directoryName}>{props.name}</Text>
       </View>
+      <AddDirectoryModal
+        visible={modalVisible}
+        onClose={onCloseModal}
+      ></AddDirectoryModal>
     </View>
   );
 }

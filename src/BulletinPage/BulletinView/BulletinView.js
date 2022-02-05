@@ -1,23 +1,30 @@
-import { ScrollView, StyleSheet, Text, View } from "react-native";
-import AddDirectory from "./AddDirectory";
-import SingleDirectory from "./SingleDirectory";
+import { StyleSheet, View, Text } from "react-native";
+import BulletinViewModel from "../BulletinViewModel/BulletinViewModel";
+import MultiDirectory from "./MultiDirectory";
+import { useState } from "react";
+import Path from "./Path";
+
+const ViewModel = new BulletinViewModel();
 
 export default function BulletinView() {
+  const [currentDirectory, setDirectory] = useState("root");
+
+  const onChangeDirectory = (name) => {
+    setDirectory(name);
+  };
+
   return (
     <View style={styles.container}>
-      <View style={styles.directoryPath}>
-        <Text style={{ fontSize: 36 }}>/root</Text>
+      <View style={styles.directoryPathContainer}>
+        <Path
+          path={ViewModel.getDirectoryPath(currentDirectory)}
+          onClick={onChangeDirectory}
+        ></Path>
       </View>
-      <View style={{ flex: 0.9 }}>
-        <ScrollView contentContainerStyle={styles.scrollView}>
-          <SingleDirectory name={"프론트 회의록"}></SingleDirectory>
-          <SingleDirectory name={"백엔드 회의록"}></SingleDirectory>
-          <SingleDirectory name={"참고 문헌"}></SingleDirectory>
-          <SingleDirectory name={"참고 문헌"}></SingleDirectory>
-          <SingleDirectory name={"참고 문헌"}></SingleDirectory>
-          <AddDirectory name={"추가하기"}></AddDirectory>
-        </ScrollView>
-      </View>
+      <MultiDirectory
+        name={currentDirectory}
+        onChangeDirectory={onChangeDirectory}
+      />
     </View>
   );
 }
@@ -25,16 +32,12 @@ export default function BulletinView() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "flex-end",
   },
-  scrollView: {
-    justifyContent: "space-evenly",
-    alignItems: "center",
-  },
-  directoryPath: {
+  directoryPathContainer: {
     flex: 0.1,
     borderBottomWidth: 4,
     borderBottomColor: "#FF9090",
     paddingLeft: 7,
+    justifyContent: "flex-end",
   },
 });

@@ -1,15 +1,14 @@
-import { StyleSheet, Text, View, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, Dimensions } from "react-native";
 
-import {theme} from "../../theme.js";
+import { theme } from "../../theme.js";
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
 
-export function PersonalAssignment({assignmentName, dDay}) {
-
+export function PersonalAssignment({ assignmentName, dDay }) {
   return (
     <View style={styles.container}>
-      <View style={styles.unorderedList}> </View>
-      <View style={styles.content}> 
+      <View style={styles.unorderedList}></View>
+      <View style={styles.content}>
         <Text style={styles.assignmentName}>{assignmentName}</Text>
         <Text style={styles.dDay}>{dDay}</Text>
       </View>
@@ -20,8 +19,8 @@ export function PersonalAssignment({assignmentName, dDay}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    flexDirection: 'row',
+    alignItems: "center",
+    flexDirection: "row",
     marginVertical: 14,
     marginLeft: 8,
   },
@@ -33,11 +32,10 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   content: {
-    flexDirection: 'column',
+    flexDirection: "column",
     marginLeft: 20,
   },
   assignmentName: {
- 
     fontSize: 24,
   },
   dDay: {

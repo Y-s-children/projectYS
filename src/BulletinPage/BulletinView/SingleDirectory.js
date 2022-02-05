@@ -12,7 +12,10 @@ export default function SingleDirectory(props) {
   // props는 재 할당할 수 없다.
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.insideDirectoryButton}></TouchableOpacity>
+      <TouchableOpacity
+        style={styles.insideDirectoryButton}
+        onPress={() => props.onClick(props.name)}
+      ></TouchableOpacity>
 
       <View style={styles.insideDirectoryBackground}>
         <Text style={styles.directoryName}>{props.name}</Text>

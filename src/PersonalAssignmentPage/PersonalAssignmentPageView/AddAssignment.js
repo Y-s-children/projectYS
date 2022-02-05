@@ -1,29 +1,33 @@
-import { StyleSheet, Text, View, Dimensions, TouchableOpacity } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Dimensions,
+  TouchableOpacity,
+} from "react-native";
 
-import {theme} from "../../theme.js";
+import { theme } from "../../theme.js";
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
 
-export function AddAssignment({assignmentName}) {
-
+export function AddAssignment({ assignmentName }) {
   return (
     <TouchableOpacity style={styles.container}>
-      <View style={styles.unorderedList}> 
+      <View style={styles.unorderedList}>
         <Text style={styles.unorderedListText}>+</Text>
       </View>
-      <View style={styles.content}> 
+      <View style={styles.content}>
         <Text style={styles.assignmentName}>{assignmentName}</Text>
       </View>
     </TouchableOpacity>
-    
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    flexDirection: 'row',
+    alignItems: "center",
+    flexDirection: "row",
     marginVertical: 14,
     marginLeft: 8,
   },
@@ -33,20 +37,18 @@ const styles = StyleSheet.create({
     height: 20,
     width: 20,
     borderRadius: 20 / 2,
-    alignItems : "center",
-    justifyContent : "center",
+    alignItems: "center",
+    justifyContent: "center",
   },
-  unorderedListText:{
+  unorderedListText: {
     fontSize: 16,
-    fontWeight:"800",
-    marginBottom: 3,
- },
+    fontWeight: "800",
+  },
   content: {
-    flexDirection: 'column',
+    flexDirection: "column",
     marginLeft: 15,
   },
   assignmentName: {
- 
     fontSize: 24,
   },
   dDay: {
