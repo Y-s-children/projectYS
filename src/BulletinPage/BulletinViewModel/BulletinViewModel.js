@@ -34,4 +34,9 @@ export default class BulletinViewModel {
   getDirectoryPath(directoryName) {
     return this._directoryInfo[directoryName].path;
   }
+
+  addNewDirectory(directoryName, directoryPath, parentDirectoryName) {
+    this._directoryInfo[parentDirectoryName].subDir.push(directoryName);
+    this._directoryInfo[directoryName] = { path: directoryPath, subDir: [] };
+  }
 }

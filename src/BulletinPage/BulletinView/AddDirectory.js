@@ -12,18 +12,17 @@ const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
 
 export default function AddDirectory(props) {
   const [modalVisible, setVisibility] = useState(false);
-  const onPressAddDirectory = () => {
-    setVisibility(true);
-  };
-  const onCloseModal = () => {
-    setVisibility(false);
+  const onConfirmName = (kind, name) => {
+    props.onAddDirectory(kind, name);
   };
 
   return (
     <View style={styles.container}>
       <TouchableOpacity
         style={styles.insideDirectoryButton}
-        onPress={onPressAddDirectory}
+        onPress={() => {
+          setVisibility(true);
+        }}
       >
         <Text style={{ fontSize: 36 }}>+</Text>
       </TouchableOpacity>
@@ -33,7 +32,10 @@ export default function AddDirectory(props) {
       </View>
       <AddDirectoryModal
         visible={modalVisible}
-        onClose={onCloseModal}
+        onClose={() => {
+          setVisibility(false);
+        }}
+        onConfirm={onConfirmName}
       ></AddDirectoryModal>
     </View>
   );

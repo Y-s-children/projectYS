@@ -2,6 +2,7 @@ import { ScrollView, StyleSheet, Text, View } from "react-native";
 import AddDirectory from "./AddDirectory";
 import SingleDirectory from "./SingleDirectory";
 import BulletinViewModel from "../BulletinViewModel/BulletinViewModel";
+import { useEffect, useState } from "react";
 
 const ViewModel = new BulletinViewModel();
 
@@ -12,15 +13,20 @@ export default function MultiDirectory(props) {
     props.onChangeDirectory(name);
   };
 
-  const Directories = subDirectorNames.map((name, index) => (
+  const directories = subDirectorNames.map((name, index) => (
     <SingleDirectory key={index} name={name} onClick={onClickDirectory} />
   ));
+
+  const onAddDirectory = (kind, name) => {
+    console.log(kind);
+    console.log(name);
+  };
 
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollView}>
-        {Directories}
-        <AddDirectory name="추가하기" />
+        {directories}
+        <AddDirectory name="추가하기" onAddDirectory={onAddDirectory} />
       </ScrollView>
     </View>
   );
