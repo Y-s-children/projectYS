@@ -1,25 +1,18 @@
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import AddDirectory from "./AddDirectory";
 import SingleDirectory from "./SingleDirectory";
-import BulletinViewModel from "../BulletinViewModel/BulletinViewModel";
-import { useEffect, useState } from "react";
-
-const ViewModel = new BulletinViewModel();
 
 export default function MultiDirectory(props) {
-  const subDirectorNames = ViewModel.getSubDirectoryNames(props.name);
-
   const onClickDirectory = (name) => {
     props.onChangeDirectory(name);
   };
 
-  const directories = subDirectorNames.map((name, index) => (
+  const directories = props.subDirectoryNames.map((name, index) => (
     <SingleDirectory key={index} name={name} onClick={onClickDirectory} />
   ));
 
   const onAddDirectory = (kind, name) => {
-    console.log(kind);
-    console.log(name);
+    props.onAddDirectory(kind, name);
   };
 
   return (

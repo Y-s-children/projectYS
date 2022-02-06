@@ -8,9 +8,21 @@ const ViewModel = new BulletinViewModel();
 
 export default function BulletinView() {
   const [currentDirectory, setDirectory] = useState("root");
+  const [subDirectory, setSubDirectory] = useState(
+    ViewModel.getSubDirectoryNames("root")
+  );
 
   const onChangeDirectory = (name) => {
     setDirectory(name);
+    setSubDirectory(ViewModel.getSubDirectoryNames(name));
+  };
+
+  const onAddDirectory = (kind, name) => {
+    const path = ViewModel.getDirectoryPath(currentDirectory) + "/" + name;
+    ViewModel.addNewDirectory(name, path, currentDirectory);
+
+    // setState는 값이 변할때 render되는데, 참조의 경우, 참조 주소가 바뀌어야 한다. -> 배열은 배열의 값을 바꾼다고 render되지 않음!
+    setSubDirectory([...subDirectory, name]);
   };
 
   return (
@@ -22,8 +34,9 @@ export default function BulletinView() {
         ></Path>
       </View>
       <MultiDirectory
-        name={currentDirectory}
+        subDirectoryNames={subDirectory}
         onChangeDirectory={onChangeDirectory}
+        onAddDirectory={onAddDirectory}
       />
     </View>
   );

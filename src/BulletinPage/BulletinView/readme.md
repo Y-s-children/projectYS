@@ -9,6 +9,15 @@ BulletinView
 
 # non-modal 컴포넌트 설명
 
+## 0. BulletinView
+
+- BulletinView의 가장 큰 목적은 렌더링을 관리하는 것입니다.
+- modal을 관리하기 위한 visibility state를 제외하면, 다른 하위 non-modal 컴포넌트에서는 state를 생성하지 않습니다.
+- 모든 렌더링은 BulletinView에서 일어나며, 그로인해 하위 컴포넌트가 모두 재 렌더링되는데, 이는 게시판 페이지의 특성상 비효율적이지 않습니다.
+- 렌더링이 필요한 event가 발생하면 BulletinView의 콜백함수로 처리합니다.
+- 따라서 BulletinView 로직의 대부분은 event가 발생했을때, state를 적절하게 바꾸는것 뿐입니다.
+- BulletinViewModel은 오직 BulletinView에서만 사용하므로, 여러개의 클래스 인스턴스간 동일성을 확인할 필요가 없습니다.
+
 ## 1. Path
 
 - props : path, onClick(콜백)
@@ -17,9 +26,10 @@ BulletinView
 
 ## 2. MultiDirectory
 
-- props : name, onChangeDirectory(콜백)
-- 디렉토리의 이름을 받아서 해당 디렉토리의 하위 디렉토리를 SingleDirectory 형태로 화면에 표시합니다.
+- props : subDirectoryNames, onChangeDirectory(콜백), onAddDirectory(콜백)
+- 하위 디렉토리의 이름들을 받아서 각 디렉토리를 SingleDirectory 형태로 화면에 표시합니다.
 - 디렉토리의 이동이 요청되면 이동할 디렉토리의 이름을 onChangeDirectory 콜백함수의 첫번째 인자로 제공합니다.
+- 디렉토리의 생성이 요청되면, onAddDirectory 콜백함수에게 이름과, 속성을 인자로 제공합니다.
 
 ## 3. SingleDirectory
 

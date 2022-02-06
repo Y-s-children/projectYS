@@ -60,7 +60,7 @@ export default function AddDirectoryModal(props) {
               <AntDesign name="close" size={24} color="red" />
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={onConfirm}
+              onPressOut={onConfirm}
               style={{ flexDirection: "row" }}
             >
               <Text style={styles.buttonText}>확인</Text>

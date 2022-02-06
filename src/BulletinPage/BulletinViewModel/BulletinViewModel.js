@@ -28,11 +28,12 @@ export default class BulletinViewModel {
 
   // public
   getSubDirectoryNames(directoryName) {
-    return this._directoryInfo[directoryName].subDir;
+    return [...this._directoryInfo[directoryName].subDir]; // 배열을 반환 형식은 default가 참조에 의한 반환이다.
   }
 
   getDirectoryPath(directoryName) {
-    return this._directoryInfo[directoryName].path;
+    const path = this._directoryInfo[directoryName].path;
+    return path;
   }
 
   addNewDirectory(directoryName, directoryPath, parentDirectoryName) {
