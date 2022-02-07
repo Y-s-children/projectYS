@@ -28,9 +28,15 @@ export default function BulletinView() {
   };
 
   const onModifyDirectoryName = (originalDirectoryName, newDiretoryName) => {
-    // ViewModel.createNewDirectory(newDiretoryName, "/root/프론트 회의록");
-    // ViewModel.deleteDirectory("/root/프론트 회의록");
-    // ViewModel.getSubDirectory("/root/프론트 회의록");
+    const path = currentDirectoryPath + "/" + originalDirectoryName;
+    ViewModel.modifyDirectoryName(path, newDiretoryName);
+    setSubDirectory(ViewModel.getSubDirectoryNames(currentDirectoryPath));
+  };
+
+  const onDeleteDirectory = (directoryName) => {
+    const path = currentDirectoryPath + "/" + directoryName;
+    ViewModel.deleteDirectory(path);
+    setSubDirectory(ViewModel.getSubDirectoryNames(currentDirectoryPath));
   };
 
   return (
@@ -43,6 +49,7 @@ export default function BulletinView() {
         onChangeDirectory={onDirectoryMoveFront}
         onAddDirectory={onAddDirectory}
         onModifyDirectoryName={onModifyDirectoryName}
+        onDeleteDirectory={onDeleteDirectory}
       />
     </View>
   );

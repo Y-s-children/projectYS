@@ -11,12 +11,17 @@ export default function MultiDirectory(props) {
     props.onModifyDirectoryName(originalName, modifiedName);
   };
 
+  const onDeleteDirectory = (directoryName) => {
+    props.onDeleteDirectory(directoryName);
+  };
+
   const directories = props.subDirectoryNames.map((name, index) => (
     <SingleDirectory
       key={index}
       name={name}
       onClick={onClickDirectory}
       onModifyDirectoryName={onModifyDirectoryName}
+      onDeleteDirectory={onDeleteDirectory}
     />
   ));
 

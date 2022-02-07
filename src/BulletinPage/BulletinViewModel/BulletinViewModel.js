@@ -5,26 +5,21 @@ export default class BulletinViewModel {
   _directoryInfo = {
     root: {
       type: "folder",
-      name: "root",
       subDir: {
         "프론트 회의록": {
-          name: "프론트 회의록",
           type: "folder",
           subDir: {
             "회의록 1": {
-              name: "회의록 1",
               type: "folder",
               subDir: {},
             },
             "회의록 2": {
-              name: "회의록 2",
               type: "folder",
               subDir: {},
             },
           },
         },
         참고문헌: {
-          name: "참고문헌",
           type: "file",
           subDir: {},
         },
@@ -39,7 +34,7 @@ export default class BulletinViewModel {
 
     let currentDirectory = this._directoryInfo[path[0]];
     let nextPathIdx = 1;
-    while (nextPathIdx !== path.length) {
+    while (nextPathIdx < path.length) {
       currentDirectory = currentDirectory.subDir[path[nextPathIdx]];
       ++nextPathIdx;
     }
@@ -47,7 +42,6 @@ export default class BulletinViewModel {
     return currentDirectory;
   }
 
-  // create, read, update, delete
   createNewDirectory(directoryName, directoryPath, directoryType = "folder") {
     let path = directoryPath.split("/");
     path.shift(); // 첫번째 요소는 ""
@@ -89,5 +83,24 @@ export default class BulletinViewModel {
     }
 
     return [...subDirectoryNames]; // 배열 또는 객체는 참조가 아닌 값을 전달하여야 한다.
+  }
+
+  modifyDirectoryName(directoryPath, newName) {
+    let path = directoryPath.split("/");
+    path.shift();
+
+    // 부모 디렉토리의 경로 계산
+    let parentDirectoryPath = "";
+    for (let i = 0; i < path.length - 1; ++i) {
+      parentDirectoryPath = parentDirectoryPath + "/" + path[i];
+    }
+
+    let parentDirectory = this._moveToDirectory(parentDirectoryPath);
+
+    // 함수를 호출하는 곳에서 newName이 중복인 경우에 대해서 예외 처리 필요
+    parentDirectory.subDir[newName] =
+      parentDirectory.subDir[path[path.length - 1]];
+
+    delete parentDirectory.subDir[path[path.length - 1]];
   }
 }

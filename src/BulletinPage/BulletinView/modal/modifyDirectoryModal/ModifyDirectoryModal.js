@@ -4,32 +4,39 @@ import {
   View,
   StyleSheet,
   Dimensions,
-  Text,
   TouchableOpacity,
-  Alert,
+  Text,
 } from "react-native";
-import ChooseKind from "./ChooseKind";
-import ChooseName from "./ChooseName";
+import ChangeName from "./ChangeName";
 import { AntDesign } from "@expo/vector-icons";
+import DeleteDirectory from "./DeleteDirectory";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
 
-export default function AddDirectoryModal(props) {
-  const [kind, setKind] = useState("folder");
-  const [confirmedName, setConfirmedName] = useState("");
+export default function ModifyDirectoryModal(props) {
+  let modifiedName = "";
+  const onEndEditing = (text) => {
+    modifiedName = text;
+  };
+
+  let isDelete = false;
+  const onPressDelete = (decision) => {
+    isDelete = decision;
+  };
 
   const onDismiss = () => {
-    setKind("folder");
-    setConfirmedName("");
     props.onClose();
   };
 
   const onConfirm = () => {
-    if (confirmedName === "") {
-      Alert.alert("이름을 입력해 주세요.");
+    if (isDelete === true) {
+      props.onDeleteDirectory();
+      onDismiss();
       return;
     }
-    props.onConfirm(kind, confirmedName);
+    if (modifiedName !== "") {
+      props.onModifyName(modifiedName);
+    }
     onDismiss();
   };
 
@@ -37,20 +44,8 @@ export default function AddDirectoryModal(props) {
     <Modal animationType="fade" visible={props.visible} transparent={true}>
       <View style={styles.container}>
         <View style={styles.modalView}>
-          <ChooseKind
-            default={kind}
-            onChange={(kind) => {
-              setKind(kind);
-            }}
-          ></ChooseKind>
-
-          <ChooseName
-            kind={kind}
-            onEndTyping={(name) => {
-              setConfirmedName(name);
-            }}
-          ></ChooseName>
-
+          <ChangeName onEndEditing={onEndEditing}></ChangeName>
+          <DeleteDirectory onPress={onPressDelete}></DeleteDirectory>
           <View style={styles.btnWrapper}>
             <TouchableOpacity
               onPress={onDismiss}
@@ -102,10 +97,9 @@ const styles = StyleSheet.create({
     elevation: 12,
   },
   btnWrapper: {
-    flex: 1,
     flexDirection: "row",
-    alignItems: "flex-end",
     justifyContent: "space-evenly",
+    alignItems: "center",
   },
   buttonText: {
     fontSize: 20,

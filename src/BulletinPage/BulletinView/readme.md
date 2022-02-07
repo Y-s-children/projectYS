@@ -26,10 +26,13 @@ BulletinView
 
 ## 2. MultiDirectory
 
-- props : subDirectoryNames, onChangeDirectory(콜백), onAddDirectory(콜백)
+- props : subDirectoryNames
+- props(콜백) : onChangeDirectory, onAddDirectory, onModifyDirectoryName, onDeleteDirectory
 - 하위 디렉토리의 이름들을 받아서 각 디렉토리를 SingleDirectory 형태로 화면에 표시합니다.
 - 디렉토리의 이동이 요청되면 이동할 디렉토리의 이름을 onChangeDirectory 콜백함수의 첫번째 인자로 제공합니다.
 - 디렉토리의 생성이 요청되면, onAddDirectory 콜백함수에게 이름과, 속성을 인자로 제공합니다.
+- 디렉토리의 이름 변경이 요청되면 콜백 함수로 원래 디렉토리 이름과, 새로운 디렉토리 이름을 인자로 제공합니다.
+- 디렉토리의 삭제가 변경되면 콜백 함수로 삭제가 요청된 디렉토리 이름을 인자로 제공합니다.
 
 ## 3. SingleDirectory
 
