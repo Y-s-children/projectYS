@@ -7,36 +7,42 @@ import Path from "./Path";
 const ViewModel = new BulletinViewModel();
 
 export default function BulletinView() {
-  const [currentDirectory, setDirectory] = useState("root");
+  const [currentDirectoryPath, setCurrentDirectoryPath] = useState("/root");
   const [subDirectory, setSubDirectory] = useState(
-    ViewModel.getSubDirectoryNames("root")
+    ViewModel.getSubDirectoryNames("/root")
   );
 
-  const onChangeDirectory = (name) => {
-    setDirectory(name);
-    setSubDirectory(ViewModel.getSubDirectoryNames(name));
+  const onChangePath = (newPath) => {
+    setCurrentDirectoryPath(newPath);
+    setSubDirectory(ViewModel.getSubDirectoryNames(newPath));
+  };
+
+  const onDirectoryMoveFront = (directoryName) => {
+    const newPath = currentDirectoryPath + "/" + directoryName;
+    onChangePath(newPath);
   };
 
   const onAddDirectory = (kind, name) => {
-    const path = ViewModel.getDirectoryPath(currentDirectory) + "/" + name;
-    ViewModel.addNewDirectory(name, path, currentDirectory);
+    ViewModel.createNewDirectory(name, currentDirectoryPath, kind);
+    setSubDirectory(ViewModel.getSubDirectoryNames(currentDirectoryPath));
+  };
 
-    // setState는 값이 변할때 render되는데, 참조의 경우, 참조 주소가 바뀌어야 한다. -> 배열은 배열의 값을 바꾼다고 render되지 않음!
-    setSubDirectory([...subDirectory, name]);
+  const onModifyDirectoryName = (originalDirectoryName, newDiretoryName) => {
+    // ViewModel.createNewDirectory(newDiretoryName, "/root/프론트 회의록");
+    // ViewModel.deleteDirectory("/root/프론트 회의록");
+    // ViewModel.getSubDirectory("/root/프론트 회의록");
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.directoryPathContainer}>
-        <Path
-          path={ViewModel.getDirectoryPath(currentDirectory)}
-          onClick={onChangeDirectory}
-        ></Path>
+        <Path path={currentDirectoryPath} onClick={onChangePath}></Path>
       </View>
       <MultiDirectory
         subDirectoryNames={subDirectory}
-        onChangeDirectory={onChangeDirectory}
+        onChangeDirectory={onDirectoryMoveFront}
         onAddDirectory={onAddDirectory}
+        onModifyDirectoryName={onModifyDirectoryName}
       />
     </View>
   );

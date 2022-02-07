@@ -22,7 +22,7 @@ BulletinView
 
 - props : path, onClick(콜백)
 - 주어진 디렉토리 경로를 바탕으로 터치 가능한 경로 컴포넌트를 화면에 표시합니다.
-- 경로를 Click하면 클릭한 디렉토리의 이름을 onClick 콜백함수의 첫번째 인자로 제공합니다.
+- 경로를 Click하면 클릭한 디렉토리의 경로를 onClick 콜백함수의 첫번째 인자로 제공합니다.
 
 ## 2. MultiDirectory
 

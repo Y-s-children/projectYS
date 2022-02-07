@@ -7,8 +7,17 @@ export default function MultiDirectory(props) {
     props.onChangeDirectory(name);
   };
 
+  const onModifyDirectoryName = (originalName, modifiedName) => {
+    props.onModifyDirectoryName(originalName, modifiedName);
+  };
+
   const directories = props.subDirectoryNames.map((name, index) => (
-    <SingleDirectory key={index} name={name} onClick={onClickDirectory} />
+    <SingleDirectory
+      key={index}
+      name={name}
+      onClick={onClickDirectory}
+      onModifyDirectoryName={onModifyDirectoryName}
+    />
   ));
 
   const onAddDirectory = (kind, name) => {
