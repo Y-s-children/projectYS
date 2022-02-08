@@ -10,29 +10,29 @@ export default function BulletinView() {
   const [currentDirectoryPath, setCurrentDirectoryPath] = useState("/root");
   const [subDirectory, setSubDirectory] = useState(ViewModel.getSubDirectoryNames("/root"));
 
-  const onChangePath = (newPath) => {
+  const onModfiyCurrentDirectoryPath = (newPath) => {
     setCurrentDirectoryPath(newPath);
     setSubDirectory(ViewModel.getSubDirectoryNames(newPath));
   };
 
-  const onDirectoryMoveFront = (directoryName) => {
+  const onDirectoryMoveForward = (directoryName) => {
     const newPath = currentDirectoryPath + "/" + directoryName;
-    onChangePath(newPath);
+    onModfiyCurrentDirectoryPath(newPath);
   };
 
-  const onCreateDirectory = (name) => {
-    ViewModel.createNewDirectory(name, currentDirectoryPath);
+  const onCreateDirectory = (directoryName) => {
+    ViewModel.createNewDirectory(directoryName, currentDirectoryPath);
     setSubDirectory(ViewModel.getSubDirectoryNames(currentDirectoryPath));
   };
 
-  const onCreateFile = (name, contentURI) => {
-    ViewModel.createNewFile(name, currentDirectoryPath, contentURI);
+  const onCreateFile = (fileName, contentURI) => {
+    ViewModel.createNewFile(fileName, currentDirectoryPath, contentURI);
     setSubDirectory(ViewModel.getSubDirectoryNames(currentDirectoryPath));
   };
 
-  const onModifyDirectoryName = (originalDirectoryName, newDiretoryName) => {
+  const onModifyDirectoryName = (originalDirectoryName, modifiedDiretoryName) => {
     const path = currentDirectoryPath + "/" + originalDirectoryName;
-    ViewModel.modifyDirectoryName(path, newDiretoryName);
+    ViewModel.modifyDirectoryName(path, modifiedDiretoryName);
     setSubDirectory(ViewModel.getSubDirectoryNames(currentDirectoryPath));
   };
 
@@ -45,12 +45,12 @@ export default function BulletinView() {
   return (
     <View style={styles.container}>
       <View style={styles.directoryPathContainer}>
-        <Path path={currentDirectoryPath} onClick={onChangePath}></Path>
+        <Path path={currentDirectoryPath} onClick={onModfiyCurrentDirectoryPath}></Path>
       </View>
       <MultiDirectory
         subDirectoryNames={subDirectory}
-        onChangeDirectory={onDirectoryMoveFront}
-        onAddDirectory={onCreateDirectory}
+        onDirectoryMoveForward={onDirectoryMoveForward}
+        onCreateDirectory={onCreateDirectory}
         onCreateFile={onCreateFile}
         onModifyDirectoryName={onModifyDirectoryName}
         onDeleteDirectory={onDeleteDirectory}

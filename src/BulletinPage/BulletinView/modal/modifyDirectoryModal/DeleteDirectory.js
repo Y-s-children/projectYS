@@ -9,12 +9,10 @@ export default function DeleteDirectory(props) {
     setConfirm(true);
     props.onPress(true);
   };
+
   const onPressButton = () => {
     if (confirm == false) {
-      Alert.alert("삭제 확인", "정말로 삭제하시겠습니까?", [
-        { text: "아니오" },
-        { text: "예", onPress: onConfirm },
-      ]);
+      Alert.alert("삭제 확인", "정말로 삭제하시겠습니까?", [{ text: "아니오" }, { text: "예", onPress: onConfirm }]);
     } else {
       setConfirm(false);
       props.onPress(false);

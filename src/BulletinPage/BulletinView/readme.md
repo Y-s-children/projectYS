@@ -20,29 +20,64 @@ BulletinView
 
 ## 1. Path
 
-- props : path, onClick(콜백)
-- 주어진 디렉토리 경로를 바탕으로 터치 가능한 경로 컴포넌트를 화면에 표시합니다.
-- 경로를 Click하면 클릭한 디렉토리의 경로를 onClick 콜백함수의 첫번째 인자로 제공합니다.
+### props
+
+1. path
+2. onClick - callback(newPath)
 
 ## 2. MultiDirectory
 
-- props : subDirectoryNames
-- props(콜백) : onChangeDirectory, onAddDirectory, onModifyDirectoryName, onDeleteDirectory
-- 하위 디렉토리의 이름들을 받아서 각 디렉토리를 SingleDirectory 형태로 화면에 표시합니다.
-- 디렉토리의 이동이 요청되면 이동할 디렉토리의 이름을 onChangeDirectory 콜백함수의 첫번째 인자로 제공합니다.
-- 디렉토리의 생성이 요청되면, onAddDirectory 콜백함수에게 이름과, 속성을 인자로 제공합니다.
-- 디렉토리의 이름 변경이 요청되면 콜백 함수로 원래 디렉토리 이름과, 새로운 디렉토리 이름을 인자로 제공합니다.
-- 디렉토리의 삭제가 변경되면 콜백 함수로 삭제가 요청된 디렉토리 이름을 인자로 제공합니다.
+### props
+
+1. subDirectoryNames - []
+2. onDirectoryMoveForward - callback(directoryName)
+3. onCreateDirectory - callback(directoryName)
+4. onCreateFile - callback(fileName, contentURI)
+5. onModifyDirectoryName - callback(originalDirectory ,modifiedDiretoryName)
+6. onDeleteDirectory - callback(directoryName)
 
 ## 3. SingleDirectory
 
-- props : name, onClick(콜백)
-- 디렉토리의 이름을 받아서 해당 디렉토리를 화면에 표시합니다.
-- 컴포넌트의 클릭 가능한 부분을 클릭하면 name을 onClick 콜백 함수에 전달합니다.
+### props
+
+1. directoryName - string
+2. onDirectoryMoveForward - callback(directoryName)
+3. onModifyDirectoryName - callback(originalName, modifiedName)
+4. onDeleteDirectory - callback(directoryName)
 
 ## 4. addDirectory
 
-- props : name, onClick(콜백)
-- onClick이 발생하면 새로운 디렉토리 또는 파일을 생성합니다.
-- 사용자로부터 새로운 디렉토리 또는 파일에 대한 정보를 받은뒤, 해당 정보를 onClick 콜백함수에 전달합니다.
-- 사용자로부터의 정보는 addDirectoryModal을 통해서 받습니다.
+### props
+
+1. name - string
+2. onCreateDirectory - callback(directoryName)
+3. onCreateFile - callback(fileName, contentURI)
+
+# 이름 규칙
+
+### 1. 변수
+
+- 성격, 특성: type (bad: kind)
+- 디렉토리, 폴더: Directory (bad: folder)
+- 파일: file
+- 생성, 추가: create (bad: add)
+- 삭제: delete (bad: remove)
+- 수정: modify (bad: change, new)
+- ~~의 경로: + path
+- ~~의 이름: + name
+- 현재 디렉토리/파일: current
+- 상위 디렉토리/파일: parent
+- 하위 디렉토리/파일: sub
+
+### 2. 이벤트
+
+- 확인 버튼을 누르는 경우: confirm
+- 취소 버튼을 누르는 경우: cancel
+- 버튼 없이 그냥 나가는 경우: dismiss
+- modal이 닫히는 경우: close
+
+### 3. 이동
+
+- 하위 디렉토리로 이동: Moveforward
+- 상위 디렉토리로 이동: Movebackward
+- 경로로 직접 이동: MoveDirectly

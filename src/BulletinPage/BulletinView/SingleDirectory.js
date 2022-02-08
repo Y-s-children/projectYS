@@ -1,58 +1,40 @@
 import { useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Dimensions,
-  Alert,
-} from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from "react-native";
 import ModifyDirectoryModal from "./modal/modifyDirectoryModal/ModifyDirectoryModal";
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
 
 export default function SingleDirectory(props) {
-  const [modalVisibility, setVisibility] = useState(false);
+  const [modalVisibility, setModalVisibility] = useState(false);
 
   const onCloseModal = () => {
-    setVisibility(false);
+    setModalVisibility(false);
   };
 
   const onModfiyName = (modifiedName) => {
-    props.onModifyDirectoryName(props.name, modifiedName);
+    props.onModifyDirectoryName(props.directoryName, modifiedName);
   };
 
   const onDeleteDirectory = () => {
-    props.onDeleteDirectory(props.name);
+    props.onDeleteDirectory(props.directoryName);
   };
 
-  const onModifyDirectory = () => {
-    /**
-     * {
-     *  type: {isDelete: false, isModifyName: false, isModifyPath: false},
-     *  modifyName: "",
-     *  modifyPath: "/root",
-     * }
-     */
-    // 하나의 modal에서 이름변경 이동 삭제가 모두 일어남을 유의해야 한다.
-    // 2가지 이상이 동시에 발생했을때, 수정한 사항이 모두 적합하게 반영되려면 함수호출의 순서와 인자를 잘 파악해야한다.
+  const onDirectoryMoveForward = () => {
+    props.onDirectoryMoveForward(props.directoryName);
   };
-  // props는 재 할당할 수 없다.
+
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        style={styles.insideDirectoryButton}
-        onPress={() => props.onClick(props.name)}
-      ></TouchableOpacity>
+      <TouchableOpacity style={styles.insideDirectoryButton} onPress={onDirectoryMoveForward}></TouchableOpacity>
 
       <TouchableOpacity
         style={styles.insideDirectoryBackground}
         activeOpacity={1}
         onLongPress={() => {
-          setVisibility(true);
+          setModalVisibility(true);
         }}
       >
-        <Text style={styles.directoryName}>{props.name}</Text>
+        <Text style={styles.directoryName}>{props.directoryName}</Text>
       </TouchableOpacity>
       <ModifyDirectoryModal
         visible={modalVisibility}

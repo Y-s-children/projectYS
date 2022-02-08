@@ -1,12 +1,4 @@
-import { useState } from "react";
-import {
-  Modal,
-  View,
-  StyleSheet,
-  Dimensions,
-  TouchableOpacity,
-  Text,
-} from "react-native";
+import { Modal, View, StyleSheet, Dimensions, TouchableOpacity, Text } from "react-native";
 import ChangeName from "./ChangeName";
 import { AntDesign } from "@expo/vector-icons";
 import DeleteDirectory from "./DeleteDirectory";
@@ -24,20 +16,19 @@ export default function ModifyDirectoryModal(props) {
     isDelete = decision;
   };
 
-  const onDismiss = () => {
+  const onCancel = () => {
     props.onClose();
   };
 
   const onConfirm = () => {
     if (isDelete === true) {
       props.onDeleteDirectory();
-      onDismiss();
-      return;
+    } else {
+      if (modifiedName !== "") {
+        props.onModifyName(modifiedName);
+      }
     }
-    if (modifiedName !== "") {
-      props.onModifyName(modifiedName);
-    }
-    onDismiss();
+    props.onClose();
   };
 
   return (
@@ -47,17 +38,11 @@ export default function ModifyDirectoryModal(props) {
           <ChangeName onEndEditing={onEndEditing}></ChangeName>
           <DeleteDirectory onPress={onPressDelete}></DeleteDirectory>
           <View style={styles.btnWrapper}>
-            <TouchableOpacity
-              onPress={onDismiss}
-              style={{ flexDirection: "row" }}
-            >
+            <TouchableOpacity onPress={onCancel} style={{ flexDirection: "row" }}>
               <Text style={styles.buttonText}>취소</Text>
               <AntDesign name="close" size={24} color="red" />
             </TouchableOpacity>
-            <TouchableOpacity
-              onPress={onConfirm}
-              style={{ flexDirection: "row" }}
-            >
+            <TouchableOpacity onPress={onConfirm} style={{ flexDirection: "row" }}>
               <Text style={styles.buttonText}>확인</Text>
               <AntDesign name="check" size={24} color="blue" />
             </TouchableOpacity>

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Modal, View, StyleSheet, Dimensions, Text, TouchableOpacity, Alert } from "react-native";
-import ChooseKind from "./ChooseKind";
+import ChooseType from "./ChooseType";
 import ChooseName from "./ChooseName";
 import { AntDesign } from "@expo/vector-icons";
 
@@ -10,12 +10,12 @@ import * as DocumentPicker from "expo-document-picker";
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
 
 export default function AddDirectoryModal(props) {
-  const [kind, setKind] = useState("folder");
+  const [type, setType] = useState("directory");
   const [confirmedName, setConfirmedName] = useState("");
 
   let contentURI = "";
-  const onChangeKind = async (newkind) => {
-    if (kind === "folder" && newkind === "file") {
+  const onChangeType = async (newType) => {
+    if (type === "directory" && newType === "file") {
       await DocumentPicker.getDocumentAsync()
         .then((result) => {
           if (result.type === "success") {
@@ -27,23 +27,23 @@ export default function AddDirectoryModal(props) {
         })
         .then(async (fileURI) => {
           contentURI = await FileSystem.getContentUriAsync(fileURI);
-          setKind("file");
+          setType("file");
         })
         .catch(() => {
-          console.log("on AddDirectoryModal -> onChangeKind");
+          console.log("on AddDirectoryModal -> onChangeType");
           console.log("cancel to bring file uri -> cannot bring contentURI");
-          setKind("folder");
+          setType("directory");
         });
     } else {
-      if (kind === "file" && newkind === "folder") {
+      if (type === "file" && newType === "directory") {
         contentURI = "";
       }
-      setKind(newkind);
+      setType(newType);
     }
   };
 
-  const onDismiss = () => {
-    setKind("folder");
+  const onCancel = () => {
+    setType("directory");
     setConfirmedName("");
     props.onClose();
   };
@@ -53,25 +53,28 @@ export default function AddDirectoryModal(props) {
       Alert.alert("이름을 입력해 주세요.");
       return;
     }
-    props.onConfirm(kind, confirmedName, contentURI);
-    onDismiss();
+    props.onConfirm(type, confirmedName, contentURI);
+
+    setType("directory");
+    setConfirmedName("");
+    props.onClose();
   };
 
   return (
     <Modal animationType="fade" visible={props.visible} transparent={true}>
       <View style={styles.container}>
         <View style={styles.modalView}>
-          <ChooseKind kind={kind} onChange={onChangeKind}></ChooseKind>
+          <ChooseType type={type} onChange={onChangeType}></ChooseType>
 
           <ChooseName
-            kind={kind}
+            type={type}
             onEndTyping={(name) => {
               setConfirmedName(name);
             }}
           ></ChooseName>
 
           <View style={styles.btnWrapper}>
-            <TouchableOpacity onPress={onDismiss} style={{ flexDirection: "row" }}>
+            <TouchableOpacity onPress={onCancel} style={{ flexDirection: "row" }}>
               <Text style={styles.buttonText}>취소</Text>
               <AntDesign name="close" size={24} color="red" />
             </TouchableOpacity>

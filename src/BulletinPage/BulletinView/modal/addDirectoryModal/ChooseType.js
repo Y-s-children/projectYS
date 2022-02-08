@@ -1,9 +1,9 @@
 import { Text, View, TouchableOpacity, StyleSheet } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 
-export default function AddDirectoryModal(props) {
-  const onPressFolder = () => {
-    props.onChange("folder");
+export default function ChooseType(props) {
+  const onPressDirectory = () => {
+    props.onChange("directory");
   };
   const onPressFile = () => {
     props.onChange("file");
@@ -11,12 +11,12 @@ export default function AddDirectoryModal(props) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.folderOrFile}>폴더 or 파일</Text>
+      <Text style={styles.directoryOrFile}>폴더 or 파일</Text>
       <View style={styles.lineWrapper}>
         <View style={styles.wrapper}>
-          <Text style={styles.folderText}>폴더</Text>
-          <TouchableOpacity onPress={onPressFolder}>
-            {props.kind === "folder" ? (
+          <Text style={styles.directoryText}>폴더</Text>
+          <TouchableOpacity onPress={onPressDirectory}>
+            {props.type === "directory" ? (
               <AntDesign name="checkcircle" size={24} color="black" />
             ) : (
               <AntDesign name="checkcircleo" size={24} color="black" />
@@ -26,7 +26,7 @@ export default function AddDirectoryModal(props) {
         <View style={styles.wrapper}>
           <Text style={styles.fileText}>파일</Text>
           <TouchableOpacity onPress={onPressFile}>
-            {props.kind === "file" ? (
+            {props.type === "file" ? (
               <AntDesign name="checkcircle" size={24} color="black" />
             ) : (
               <AntDesign name="checkcircleo" size={24} color="black" />
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     marginBottom: 40,
   },
 
-  folderOrFile: {
+  directoryOrFile: {
     fontSize: 27,
     fontWeight: "bold",
 
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
-  folderText: {
+  directoryText: {
     fontSize: 24,
     marginRight: 10,
   },

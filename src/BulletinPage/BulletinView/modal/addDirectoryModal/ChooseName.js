@@ -3,7 +3,7 @@ import { useState } from "react";
 
 export default function ChooseName(props) {
   const [text, setText] = useState("");
-  const kind = props.kind === "file" ? "파일" : "폴더";
+  const type = props.type === "file" ? "파일" : "폴더";
 
   const onChangeText = (text) => {
     setText(text);
@@ -18,7 +18,7 @@ export default function ChooseName(props) {
         <Text style={{ fontSize: 27, fontWeight: "bold" }}>이름 입력</Text>
       </View>
       <TextInput
-        placeholder={kind + "의 이름을 입력하세요"}
+        placeholder={type + "의 이름을 입력하세요"}
         style={styles.textInput}
         onChangeText={onChangeText}
         value={text}

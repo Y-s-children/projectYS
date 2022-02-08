@@ -1,10 +1,18 @@
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import AddDirectory from "./AddDirectory";
 import SingleDirectory from "./SingleDirectory";
 
 export default function MultiDirectory(props) {
-  const onClickDirectory = (name) => {
-    props.onChangeDirectory(name);
+  const onCreateDirectory = (name) => {
+    props.onCreateDirectory(name);
+  };
+
+  const onCreateFile = (name, contentURI) => {
+    props.onCreateFile(name, contentURI);
+  };
+
+  const onDirectoryMoveForward = (name) => {
+    props.onDirectoryMoveForward(name);
   };
 
   const onModifyDirectoryName = (originalName, modifiedName) => {
@@ -15,29 +23,21 @@ export default function MultiDirectory(props) {
     props.onDeleteDirectory(directoryName);
   };
 
-  const directories = props.subDirectoryNames.map((name, index) => (
+  const directories = props.subDirectoryNames.map((directoryName, index) => (
     <SingleDirectory
       key={index}
-      name={name}
-      onClick={onClickDirectory}
+      directoryName={directoryName}
+      onDirectoryMoveForward={onDirectoryMoveForward}
       onModifyDirectoryName={onModifyDirectoryName}
       onDeleteDirectory={onDeleteDirectory}
     />
   ));
 
-  const onAddDirectory = (name) => {
-    props.onAddDirectory(name);
-  };
-
-  const onAddFile = (name, contentURI) => {
-    props.onCreateFile(name, contentURI);
-  };
-
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollView}>
         {directories}
-        <AddDirectory name="추가하기" onAddDirectory={onAddDirectory} onAddFile={onAddFile} />
+        <AddDirectory name="추가하기" onCreateDirectory={onCreateDirectory} onCreateFile={onCreateFile} />
       </ScrollView>
     </View>
   );

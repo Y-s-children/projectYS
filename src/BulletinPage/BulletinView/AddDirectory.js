@@ -6,11 +6,11 @@ const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
 
 export default function AddDirectory(props) {
   const [modalVisible, setVisibility] = useState(false);
-  const onConfirmName = (kind, name, contentURI = "") => {
-    if (kind === "folder") {
-      props.onAddDirectory(name);
+  const onConfirm = (type, name, contentURI = "") => {
+    if (type === "directory") {
+      props.onCreateDirectory(name);
     } else {
-      props.onAddFile(name, contentURI);
+      props.onCreateFile(name, contentURI);
     }
   };
 
@@ -26,14 +26,14 @@ export default function AddDirectory(props) {
       </TouchableOpacity>
 
       <View style={styles.insideDirectoryBackground}>
-        <Text style={styles.directoryName}>{props.name}</Text>
+        <Text style={styles.name}>{props.name}</Text>
       </View>
       <AddDirectoryModal
         visible={modalVisible}
         onClose={() => {
           setVisibility(false);
         }}
-        onConfirm={onConfirmName}
+        onConfirm={onConfirm}
       ></AddDirectoryModal>
     </View>
   );
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
 
     justifyContent: "center",
   },
-  directoryName: {
+  name: {
     marginLeft: 10,
     fontSize: 24,
   },
