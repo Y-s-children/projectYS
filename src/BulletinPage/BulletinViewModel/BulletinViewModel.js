@@ -20,7 +20,7 @@ export default class BulletinViewModel {
           },
         },
         참고문헌: {
-          type: "file",
+          type: "folder",
           subDir: {},
         },
       },
@@ -29,10 +29,10 @@ export default class BulletinViewModel {
 
   // 이름이 directoryName 인 디렉토리로 이동.
   _moveToDirectory(directoryPath) {
-    let path = directoryPath.split("/"); // root, 프론트 회의록, 회의록 2
-    path.shift(); // 첫번째 요소는 ""
+    let path = directoryPath.split("/"); // e.g: "", root, 프론트 회의록, 회의록 2
+    path.shift(); // 첫번째 요소 "" 제거
 
-    let currentDirectory = this._directoryInfo[path[0]];
+    let currentDirectory = this._directoryInfo[path[0]]; // path[0] = "root"
     let nextPathIdx = 1;
     while (nextPathIdx < path.length) {
       currentDirectory = currentDirectory.subDir[path[nextPathIdx]];
@@ -42,17 +42,30 @@ export default class BulletinViewModel {
     return currentDirectory;
   }
 
-  createNewDirectory(directoryName, directoryPath, directoryType = "folder") {
+  // directoryPath는 새로운 디렉토리의 부모 디렉토리의 경로이다.
+  createNewDirectory(directoryName, directoryPath) {
     let path = directoryPath.split("/");
-    path.shift(); // 첫번째 요소는 ""
+    path.shift();
 
     // 생성할 파일 또는 디렉토리의 부모 디렉토리로 이동. (생성할 위치)
     let parentDirectory = this._moveToDirectory(directoryPath);
 
     parentDirectory.subDir[directoryName] = {
-      name: directoryName,
       subDir: {},
-      type: directoryType,
+      type: "folder",
+    };
+  }
+
+  createNewFile(directoryName, directoryPath, contentURI = "") {
+    let path = directoryPath.split("/");
+    path.shift();
+
+    // 생성할 파일 또는 디렉토리의 부모 디렉토리로 이동. (생성할 위치)
+    let parentDirectory = this._moveToDirectory(directoryPath);
+
+    parentDirectory.subDir[directoryName] = {
+      contentURI: contentURI,
+      type: "file",
     };
   }
 
@@ -98,8 +111,7 @@ export default class BulletinViewModel {
     let parentDirectory = this._moveToDirectory(parentDirectoryPath);
 
     // 함수를 호출하는 곳에서 newName이 중복인 경우에 대해서 예외 처리 필요
-    parentDirectory.subDir[newName] =
-      parentDirectory.subDir[path[path.length - 1]];
+    parentDirectory.subDir[newName] = parentDirectory.subDir[path[path.length - 1]];
 
     delete parentDirectory.subDir[path[path.length - 1]];
   }

@@ -25,15 +25,19 @@ export default function MultiDirectory(props) {
     />
   ));
 
-  const onAddDirectory = (kind, name) => {
-    props.onAddDirectory(kind, name);
+  const onAddDirectory = (name) => {
+    props.onAddDirectory(name);
+  };
+
+  const onAddFile = (name, contentURI) => {
+    props.onCreateFile(name, contentURI);
   };
 
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollView}>
         {directories}
-        <AddDirectory name="추가하기" onAddDirectory={onAddDirectory} />
+        <AddDirectory name="추가하기" onAddDirectory={onAddDirectory} onAddFile={onAddFile} />
       </ScrollView>
     </View>
   );

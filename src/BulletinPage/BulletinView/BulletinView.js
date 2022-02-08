@@ -8,9 +8,7 @@ const ViewModel = new BulletinViewModel();
 
 export default function BulletinView() {
   const [currentDirectoryPath, setCurrentDirectoryPath] = useState("/root");
-  const [subDirectory, setSubDirectory] = useState(
-    ViewModel.getSubDirectoryNames("/root")
-  );
+  const [subDirectory, setSubDirectory] = useState(ViewModel.getSubDirectoryNames("/root"));
 
   const onChangePath = (newPath) => {
     setCurrentDirectoryPath(newPath);
@@ -22,8 +20,13 @@ export default function BulletinView() {
     onChangePath(newPath);
   };
 
-  const onAddDirectory = (kind, name) => {
-    ViewModel.createNewDirectory(name, currentDirectoryPath, kind);
+  const onCreateDirectory = (name) => {
+    ViewModel.createNewDirectory(name, currentDirectoryPath);
+    setSubDirectory(ViewModel.getSubDirectoryNames(currentDirectoryPath));
+  };
+
+  const onCreateFile = (name, contentURI) => {
+    ViewModel.createNewFile(name, currentDirectoryPath, contentURI);
     setSubDirectory(ViewModel.getSubDirectoryNames(currentDirectoryPath));
   };
 
@@ -47,7 +50,8 @@ export default function BulletinView() {
       <MultiDirectory
         subDirectoryNames={subDirectory}
         onChangeDirectory={onDirectoryMoveFront}
-        onAddDirectory={onAddDirectory}
+        onAddDirectory={onCreateDirectory}
+        onCreateFile={onCreateFile}
         onModifyDirectoryName={onModifyDirectoryName}
         onDeleteDirectory={onDeleteDirectory}
       />

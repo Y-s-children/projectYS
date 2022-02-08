@@ -1,16 +1,11 @@
 import { Text, View, TouchableOpacity, StyleSheet } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
-import { useState } from "react";
 
 export default function AddDirectoryModal(props) {
-  const [kind, setKind] = useState(props.default);
-
   const onPressFolder = () => {
-    setKind("folder");
     props.onChange("folder");
   };
   const onPressFile = () => {
-    setKind("file");
     props.onChange("file");
   };
 
@@ -21,7 +16,7 @@ export default function AddDirectoryModal(props) {
         <View style={styles.wrapper}>
           <Text style={styles.folderText}>폴더</Text>
           <TouchableOpacity onPress={onPressFolder}>
-            {kind === "folder" ? (
+            {props.kind === "folder" ? (
               <AntDesign name="checkcircle" size={24} color="black" />
             ) : (
               <AntDesign name="checkcircleo" size={24} color="black" />
@@ -31,7 +26,7 @@ export default function AddDirectoryModal(props) {
         <View style={styles.wrapper}>
           <Text style={styles.fileText}>파일</Text>
           <TouchableOpacity onPress={onPressFile}>
-            {kind === "file" ? (
+            {props.kind === "file" ? (
               <AntDesign name="checkcircle" size={24} color="black" />
             ) : (
               <AntDesign name="checkcircleo" size={24} color="black" />

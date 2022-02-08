@@ -1,19 +1,17 @@
 import { useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Dimensions,
-} from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from "react-native";
 import AddDirectoryModal from "./modal/addDirectoryModal/AddDirectoryModal";
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
 
 export default function AddDirectory(props) {
   const [modalVisible, setVisibility] = useState(false);
-  const onConfirmName = (kind, name) => {
-    props.onAddDirectory(kind, name);
+  const onConfirmName = (kind, name, contentURI = "") => {
+    if (kind === "folder") {
+      props.onAddDirectory(name);
+    } else {
+      props.onAddFile(name, contentURI);
+    }
   };
 
   return (
